@@ -29,7 +29,7 @@ class AboutCommand : SlashCommand() {
             embeds = ArrayList<EmbedBuilder>().apply {
                 add(EmbedBuilder().apply {
                     title = "About"
-                    description = "A multipurpose bot with moderation features and a lot more.\n"
+                    description = "A multipurpose bot with moderation features and a lot more."
                     color = Color(0x006064)
                     fields = ArrayList<EmbedBuilder.Field>().apply {
                         add(EmbedBuilder.Field().apply {
