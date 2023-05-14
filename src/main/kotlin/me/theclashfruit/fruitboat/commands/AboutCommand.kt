@@ -7,6 +7,7 @@ import dev.kord.core.entity.interaction.GuildChatInputCommandInteraction
 import dev.kord.rest.builder.component.ActionRowBuilder
 import dev.kord.rest.builder.component.MessageComponentBuilder
 import dev.kord.rest.builder.message.EmbedBuilder
+import me.theclashfruit.fruitboat.BuildConfig
 import me.theclashfruit.fruitboat.util.SlashCommand
 
 class AboutCommand : SlashCommand() {
@@ -39,7 +40,7 @@ class AboutCommand : SlashCommand() {
                         })
                         add(EmbedBuilder.Field().apply {
                             name = "Version"
-                            value = "`0.1.0-alpha+discord`"
+                            value = "`${BuildConfig.VERSION}`"
                         })
                         add(EmbedBuilder.Field().apply {
                             name = "Build Date"

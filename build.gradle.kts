@@ -1,3 +1,5 @@
+import de.fuerstenau.gradle.buildconfig.GenerateBuildConfigTask
+
 buildscript {
     repositories {
         mavenCentral()
@@ -51,13 +53,39 @@ tasks {
                 sourcesMain.output
         from(contents)
     }
+
+    val generateBuildConfig = register<GenerateBuildConfigTask>("generateBuildConfig") {
+        outputDir = File("${buildDir}/gen/buildconfig/src/main")
+
+        appName = "FruitBoat"
+        clsName = "BuildConfig"
+        packageName = "me.theclashfruit.fruitboat"
+    }
+
+    val compileBuildConfig = register<JavaCompile>("compileBuildConfig") {
+        dependsOn(generateBuildConfig) // Trigger build config generation during build
+
+        classpath = files() // we need no extra class path
+
+        destinationDir = File("${buildDir}/gen/buildconfig/classes/main/")
+
+        source = fileTree(generateBuildConfig.get().outputDir)
+    }
+
     build {
-        dependsOn(fatJar) // Trigger fat jar creation during build
+        dependsOn(compileBuildConfig)
+        dependsOn(fatJar)
     }
 }
 
 kotlin {
     jvmToolchain(11)
+
+    sourceSets {
+        main {
+            this.kotlin.srcDir("$buildDir/gen/buildconfig/src/")
+        }
+    }
 }
 
 java {
