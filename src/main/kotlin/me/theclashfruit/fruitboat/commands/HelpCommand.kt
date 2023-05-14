@@ -5,7 +5,6 @@ import dev.kord.core.Kord
 import dev.kord.core.behavior.interaction.response.respond
 import dev.kord.core.entity.interaction.GuildChatInputCommandInteraction
 import dev.kord.rest.builder.message.EmbedBuilder
-import me.theclashfruit.fruitboat.BuildConfig
 import me.theclashfruit.fruitboat.util.SlashCommand
 
 class HelpCommand : SlashCommand() {

@@ -1,21 +1,8 @@
-import de.fuerstenau.gradle.buildconfig.GenerateBuildConfigTask
-
-buildscript {
-    repositories {
-        mavenCentral()
-        maven("https://plugins.gradle.org/m2/")
-    }
-    dependencies {
-        classpath("gradle.plugin.de.fuerstenau:BuildConfigPlugin:1.1.8")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.1-2")
-    }
-}
-
 plugins {
     kotlin("jvm") version "1.8.20"
     application
 
-    id("de.fuerstenau.buildconfig") version "1.1.8" apply false
+    id("com.github.gmazzo.buildconfig") version "4.0.4"
 }
 
 group = "me.theclashfruit"
@@ -37,6 +24,13 @@ dependencies {
     implementation("dev.kord:kord-core:0.9.0")
 }
 
+buildConfig {
+    packageName("me.theclashfruit.fruitboat")
+
+    buildConfigField("String", "VERSION", provider { "\"${project.version}\"" })
+    buildConfigField("long", "BUILD_TIME", "${System.currentTimeMillis()}L")
+}
+
 tasks.test {
     useJUnitPlatform()
 }
@@ -54,38 +48,13 @@ tasks {
         from(contents)
     }
 
-    val generateBuildConfig = register<GenerateBuildConfigTask>("generateBuildConfig") {
-        outputDir = File("${buildDir}/gen/buildconfig/src/main")
-
-        appName = "FruitBoat"
-        clsName = "BuildConfig"
-        packageName = "me.theclashfruit.fruitboat"
-    }
-
-    val compileBuildConfig = register<JavaCompile>("compileBuildConfig") {
-        dependsOn(generateBuildConfig) // Trigger build config generation during build
-
-        classpath = files() // we need no extra class path
-
-        destinationDir = File("${buildDir}/gen/buildconfig/classes/main/")
-
-        source = fileTree(generateBuildConfig.get().outputDir)
-    }
-
     build {
-        dependsOn(compileBuildConfig)
         dependsOn(fatJar)
     }
 }
 
 kotlin {
     jvmToolchain(11)
-
-    sourceSets {
-        main {
-            this.kotlin.srcDir("$buildDir/gen/buildconfig/src/")
-        }
-    }
 }
 
 java {

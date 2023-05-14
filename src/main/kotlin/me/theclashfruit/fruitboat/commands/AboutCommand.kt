@@ -46,7 +46,7 @@ class AboutCommand : SlashCommand() {
                         })
                         add(EmbedBuilder.Field().apply {
                             name = "Build Date"
-                            value = "<t:1684054404>"
+                            value = "<t:${BuildConfig.BUILD_TIME / 1000}>"
                         })
                         add(EmbedBuilder.Field().apply {
                             name = "Update When?"
@@ -58,7 +58,7 @@ class AboutCommand : SlashCommand() {
             components = ArrayList<MessageComponentBuilder>().apply {
                 add(ActionRowBuilder().apply {
                     linkButton("https://fruitboat.app") {
-                        label = "Website (Soon:tm:)"
+                        label = "Website (Soon™)"
                     }
                     linkButton("https://github.com/TheClashFruit/FruitBoat") {
                         label = "GitHub"
