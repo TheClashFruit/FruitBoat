@@ -1,5 +1,6 @@
 package me.theclashfruit.fruitboat
 
+import dev.kord.common.entity.PresenceStatus
 import me.theclashfruit.fruitboat.commands.AboutCommand
 import me.theclashfruit.fruitboat.commands.KotlinCommand
 import dev.kord.core.Kord
@@ -55,6 +56,10 @@ suspend fun main(args: Array<String>) {
 
     kord.login() {
         intents = Intents(Intent.Guilds, Intent.GuildMessages, Intent.GuildMessageReactions, Intent.GuildPresences)
+        presence {
+            status = PresenceStatus.Idle
+            listening("commands!")
+        }
     }
 
     log.info("Logged in as ${kord.getSelf().username}#${kord.getSelf().tag}!")

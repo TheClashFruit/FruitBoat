@@ -22,13 +22,15 @@ class AboutCommand : SlashCommand() {
     override suspend fun executeCommand(interaction: GuildChatInputCommandInteraction, kord: Kord) {
         val response = interaction.deferPublicResponse()
 
+        val randomMessages = listOf("never:tm:", "Once the world ends.", "Hopefully before I explode my computer for running 100 minecraft instances.", "```\ngit add .\ngit commit -m \"feat: bump version\"\ngit push\n```")
+
         response.respond {
             content = ""
             embeds = ArrayList<EmbedBuilder>().apply {
                 add(EmbedBuilder().apply {
                     title = "About"
                     description = "A multipurpose bot with moderation features and a lot more.\n"
-                    color = Color(0x00FF00)
+                    color = Color(0x006064)
                     fields = ArrayList<EmbedBuilder.Field>().apply {
                         add(EmbedBuilder.Field().apply {
                             name = "Author"
@@ -45,6 +47,10 @@ class AboutCommand : SlashCommand() {
                         add(EmbedBuilder.Field().apply {
                             name = "Build Date"
                             value = "<t:1684054404>"
+                        })
+                        add(EmbedBuilder.Field().apply {
+                            name = "Update When?"
+                            value = randomMessages.random()
                         })
                     }
                 })
